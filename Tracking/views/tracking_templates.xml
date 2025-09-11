@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="tracking_results_template" name="Tracking Results">
+        <t t-name="ApiTracking.tracking_results">
+            <div class="o_tracking_results">
+                <t t-if="result.found">
+                    <h3>Resultados para tracking: <span t-esc="tracking_number"/></h3>
+                    <table class="table table-bordered">
+                        <thead>
+                            <tr>
+                                <th>Campo</th>
+                                <th>Valor</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <t t-foreach="result.data" t-as="key">
+                                <tr>
+                                    <td><strong t-esc="key"/></td>
+                                    <td t-esc="result.data[key]"/>
+                                </tr>
+                            </t>
+                        </tbody>
+                    </table>
+                </t>
+                <t t-else="">
+                    <div class="alert alert-warning">
+                        <t t-esc="result.message"/>
+                    </div>
+                </t>
+            </div>
+        </t>
+    </template>
+</odoo>

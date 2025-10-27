@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="view_purchase_order_tree_inherit" model="ir.ui.view">
+            <field name="name">purchase.order.tree.inherit</field>
+            <field name="model">purchase.order</field>
+            <field name="inherit_id" ref="purchase.purchase_order_view_tree"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='partner_id']" position="after">
+                    <field name="aerotrack" 
+                            string="Codigo MIA" 
+                            class="font-weight-bold"/>
+                    <field name="estado_pedido" 
+                           string="Estado MIA"
+                           widget="html"
+                           options="{'sanitize': false}"/>
+                </xpath>
+            </field>
+        </record>       
+        
+        <record id="view_purchase_order_form_inherit" model="ir.ui.view">
+            <field name="name">purchase.order.form.inherit</field>
+            <field name="model">purchase.order</field>
+            <field name="inherit_id" ref="purchase.purchase_order_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='partner_ref']" position="after">
+                    <field name="aerotrack" 
+                            string="Codigo MIA" 
+                            placeholder="MIA001, MIA002 ..."/>                    
+                </xpath>
+                <xpath expr="//field[@name='aerotrack']" position="after">
+                    <button name="action_find_purchase_by_reference" 
+                            string="Buscar Pedido Existente por MIA" 
+                            type="object" 
+                            class="btn-primary"
+                            attrs="{'invisible': [('state', 'not in', ['draft'])]}"
+                            style="margin-top: 15px;"/>
+                </xpath>
+                <xpath expr="//button[@name='action_find_purchase_by_reference']" position="after">
+                    <field name="estado_pedido" 
+                            string="Estados MIA"
+                            readonly="1" 
+                            nolabel="1"
+                            style="margin-top: 15px;"/>
+                </xpath>
+            </field>
+        </record>        
+        
+        <record id="view_purchase_order_search_inherit" model="ir.ui.view">
+            <field name="name">purchase.order.search.inherit.aerotrack</field>
+            <field name="model">purchase.order</field>
+            <field name="inherit_id" ref="purchase.view_purchase_order_filter"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='name']" position="after">
+                    <field name="aerotrack" 
+                           string="Aerotrack" 
+                           filter_domain="[('aerotrack','ilike',self)]"/>
+                </xpath>
+            </field>
+        </record>
+    </data>
+</odoo>
